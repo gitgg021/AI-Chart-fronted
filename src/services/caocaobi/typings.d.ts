@@ -1,16 +1,4 @@
 declare namespace API {
-  type AIResultDto = {
-    chartData?: string;
-    chartId?: string;
-    onAnalysis?: string;
-  };
-
-  type BaseResponseAIResultDto_ = {
-    code?: number;
-    data?: AIResultDto;
-    message?: string;
-  };
-
   type BaseResponseBoolean_ = {
     code?: number;
     data?: boolean;
@@ -20,6 +8,12 @@ declare namespace API {
   type BaseResponseChart_ = {
     code?: number;
     data?: Chart;
+    message?: string;
+  };
+
+  type BaseResponseInt_ = {
+    code?: number;
+    data?: number;
     message?: string;
   };
 
@@ -41,6 +35,18 @@ declare namespace API {
     message?: string;
   };
 
+  type BaseResponsePagePost_ = {
+    code?: number;
+    data?: PagePost_;
+    message?: string;
+  };
+
+  type BaseResponsePagePostVO_ = {
+    code?: number;
+    data?: PagePostVO_;
+    message?: string;
+  };
+
   type BaseResponsePageUser_ = {
     code?: number;
     data?: PageUser_;
@@ -50,6 +56,12 @@ declare namespace API {
   type BaseResponsePageUserVO_ = {
     code?: number;
     data?: PageUserVO_;
+    message?: string;
+  };
+
+  type BaseResponsePostVO_ = {
+    code?: number;
+    data?: PostVO;
     message?: string;
   };
 
@@ -91,7 +103,6 @@ declare namespace API {
     chartData?: string;
     chartType?: string;
     goal?: string;
-    name?: string;
   };
 
   type ChartEditRequest = {
@@ -99,7 +110,6 @@ declare namespace API {
     chartType?: string;
     goal?: string;
     id?: string;
-    name?: string;
   };
 
   type ChartQueryRequest = {
@@ -107,7 +117,6 @@ declare namespace API {
     current?: number;
     goal?: string;
     id?: string;
-    name?: string;
     pageSize?: number;
     sortField?: string;
     sortOrder?: string;
@@ -117,7 +126,6 @@ declare namespace API {
   type ChartUpdateRequest = {
     content?: string;
     id?: string;
-    name?: string;
     tags?: string[];
     title?: string;
   };
@@ -126,13 +134,12 @@ declare namespace API {
     id?: string;
   };
 
-  type getChartByAiUsingPOSTParams = {
-    chartType?: string;
-    goal?: string;
-    name?: string;
+  type getChartByIdUsingGETParams = {
+    /** id */
+    id?: string;
   };
 
-  type getChartByIdUsingGETParams = {
+  type getPostVOByIdUsingGETParams = {
     /** id */
     id?: string;
   };
@@ -157,6 +164,84 @@ declare namespace API {
     userRole?: string;
   };
 
+  type ModelAndView = {
+    empty?: boolean;
+    model?: Record<string, any>;
+    modelMap?: Record<string, any>;
+    reference?: boolean;
+    status?:
+      | 'ACCEPTED'
+      | 'ALREADY_REPORTED'
+      | 'BAD_GATEWAY'
+      | 'BAD_REQUEST'
+      | 'BANDWIDTH_LIMIT_EXCEEDED'
+      | 'CHECKPOINT'
+      | 'CONFLICT'
+      | 'CONTINUE'
+      | 'CREATED'
+      | 'DESTINATION_LOCKED'
+      | 'EXPECTATION_FAILED'
+      | 'FAILED_DEPENDENCY'
+      | 'FORBIDDEN'
+      | 'FOUND'
+      | 'GATEWAY_TIMEOUT'
+      | 'GONE'
+      | 'HTTP_VERSION_NOT_SUPPORTED'
+      | 'IM_USED'
+      | 'INSUFFICIENT_SPACE_ON_RESOURCE'
+      | 'INSUFFICIENT_STORAGE'
+      | 'INTERNAL_SERVER_ERROR'
+      | 'I_AM_A_TEAPOT'
+      | 'LENGTH_REQUIRED'
+      | 'LOCKED'
+      | 'LOOP_DETECTED'
+      | 'METHOD_FAILURE'
+      | 'METHOD_NOT_ALLOWED'
+      | 'MOVED_PERMANENTLY'
+      | 'MOVED_TEMPORARILY'
+      | 'MULTIPLE_CHOICES'
+      | 'MULTI_STATUS'
+      | 'NETWORK_AUTHENTICATION_REQUIRED'
+      | 'NON_AUTHORITATIVE_INFORMATION'
+      | 'NOT_ACCEPTABLE'
+      | 'NOT_EXTENDED'
+      | 'NOT_FOUND'
+      | 'NOT_IMPLEMENTED'
+      | 'NOT_MODIFIED'
+      | 'NO_CONTENT'
+      | 'OK'
+      | 'PARTIAL_CONTENT'
+      | 'PAYLOAD_TOO_LARGE'
+      | 'PAYMENT_REQUIRED'
+      | 'PERMANENT_REDIRECT'
+      | 'PRECONDITION_FAILED'
+      | 'PRECONDITION_REQUIRED'
+      | 'PROCESSING'
+      | 'PROXY_AUTHENTICATION_REQUIRED'
+      | 'REQUESTED_RANGE_NOT_SATISFIABLE'
+      | 'REQUEST_ENTITY_TOO_LARGE'
+      | 'REQUEST_HEADER_FIELDS_TOO_LARGE'
+      | 'REQUEST_TIMEOUT'
+      | 'REQUEST_URI_TOO_LONG'
+      | 'RESET_CONTENT'
+      | 'SEE_OTHER'
+      | 'SERVICE_UNAVAILABLE'
+      | 'SWITCHING_PROTOCOLS'
+      | 'TEMPORARY_REDIRECT'
+      | 'TOO_EARLY'
+      | 'TOO_MANY_REQUESTS'
+      | 'UNAUTHORIZED'
+      | 'UNAVAILABLE_FOR_LEGAL_REASONS'
+      | 'UNPROCESSABLE_ENTITY'
+      | 'UNSUPPORTED_MEDIA_TYPE'
+      | 'UPGRADE_REQUIRED'
+      | 'URI_TOO_LONG'
+      | 'USE_PROXY'
+      | 'VARIANT_ALSO_NEGOTIATES';
+    view?: View;
+    viewName?: string;
+  };
+
   type OrderItem = {
     asc?: boolean;
     column?: string;
@@ -170,6 +255,32 @@ declare namespace API {
     orders?: OrderItem[];
     pages?: string;
     records?: Chart[];
+    searchCount?: boolean;
+    size?: string;
+    total?: string;
+  };
+
+  type PagePost_ = {
+    countId?: string;
+    current?: string;
+    maxLimit?: string;
+    optimizeCountSql?: boolean;
+    orders?: OrderItem[];
+    pages?: string;
+    records?: Post[];
+    searchCount?: boolean;
+    size?: string;
+    total?: string;
+  };
+
+  type PagePostVO_ = {
+    countId?: string;
+    current?: string;
+    maxLimit?: string;
+    optimizeCountSql?: boolean;
+    orders?: OrderItem[];
+    pages?: string;
+    records?: PostVO[];
     searchCount?: boolean;
     size?: string;
     total?: string;
@@ -199,6 +310,92 @@ declare namespace API {
     searchCount?: boolean;
     size?: string;
     total?: string;
+  };
+
+  type Post = {
+    content?: string;
+    createTime?: string;
+    favourNum?: number;
+    id?: string;
+    isDelete?: number;
+    tags?: string;
+    thumbNum?: number;
+    title?: string;
+    updateTime?: string;
+    userId?: string;
+  };
+
+  type PostAddRequest = {
+    content?: string;
+    tags?: string[];
+    title?: string;
+  };
+
+  type PostEditRequest = {
+    content?: string;
+    id?: string;
+    tags?: string[];
+    title?: string;
+  };
+
+  type PostFavourAddRequest = {
+    postId?: string;
+  };
+
+  type PostFavourQueryRequest = {
+    current?: number;
+    pageSize?: number;
+    postQueryRequest?: PostQueryRequest;
+    sortField?: string;
+    sortOrder?: string;
+    userId?: string;
+  };
+
+  type PostQueryRequest = {
+    content?: string;
+    current?: number;
+    favourUserId?: string;
+    id?: string;
+    notId?: string;
+    orTags?: string[];
+    pageSize?: number;
+    searchText?: string;
+    sortField?: string;
+    sortOrder?: string;
+    tags?: string[];
+    title?: string;
+    userId?: string;
+  };
+
+  type PostThumbAddRequest = {
+    postId?: string;
+  };
+
+  type PostUpdateRequest = {
+    chartData?: string;
+    chartType?: string;
+    createTime?: string;
+    genChart?: string;
+    genResult?: string;
+    goal?: string;
+    id?: string;
+    isDelete?: number;
+    updateTime?: string;
+  };
+
+  type PostVO = {
+    content?: string;
+    createTime?: string;
+    favourNum?: number;
+    hasFavour?: boolean;
+    hasThumb?: boolean;
+    id?: string;
+    tagList?: string[];
+    thumbNum?: number;
+    title?: string;
+    updateTime?: string;
+    user?: UserVO;
+    userId?: string;
   };
 
   type uploadFileUsingPOSTParams = {
@@ -270,5 +467,9 @@ declare namespace API {
     userName?: string;
     userProfile?: string;
     userRole?: string;
+  };
+
+  type View = {
+    contentType?: string;
   };
 }
