@@ -9,8 +9,9 @@
     redirect: '/add_chart',
   },
   {
+    name:"智能分析",
     path: '/add_chart',
-    icon: "smile",
+    icon: "fundOutlined",
     component: './AddChart'
   },
   { path: '/welcome', name: '欢迎', icon: 'smile', component: './Welcome' },
