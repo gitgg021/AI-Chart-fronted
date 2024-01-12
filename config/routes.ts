@@ -4,6 +4,15 @@
     layout: false,
     routes: [{ name: '登录', path: '/user/login', component: './User/Login' }],
   },
+  {
+    path: '/',
+    redirect: '/add_chart',
+  },
+  {
+    path: '/add_chart',
+    icon: "smile",
+    component: './AddChart'
+  },
   { path: '/welcome', name: '欢迎', icon: 'smile', component: './Welcome' },
   {
     path: '/admin',
