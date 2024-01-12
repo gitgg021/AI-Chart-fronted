@@ -1,6 +1,6 @@
-# CC智能 BI
+# AI Chart
 
-This project is initialized with [CC智能 BI](https://pro.ant.design). Follow is the quick guide for how to use.
+This project is initialized with [AI Chart](https://pro.ant.design). Follow is the quick guide for how to use.
 
 ## Environment Prepare
 
@@ -18,7 +18,7 @@ yarn
 
 ## Provided Scripts
 
-CC智能 BI provides some useful script to help you quick start and build with web project, code style check and test.
+AI Chart provides some useful script to help you quick start and build with web project, code style check and test.
 
 Scripts provided in `package.json`. It's safe to modify or add additional script:
 

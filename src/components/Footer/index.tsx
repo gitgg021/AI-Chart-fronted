@@ -3,7 +3,7 @@ import { DefaultFooter } from '@ant-design/pro-components';
 import '@umijs/max';
 import React from 'react';
 const Footer: React.FC = () => {
-  const defaultMessage = 'caocao出品';
+  const defaultMessage = 'AI数据可视化分析平台';
   const currentYear = new Date().getFullYear();
   return (
     <DefaultFooter
@@ -13,21 +13,21 @@ const Footer: React.FC = () => {
       copyright={`${currentYear} ${defaultMessage}`}
       links={[
         {
-          key: 'CC智能 BI',
-          title: 'CC智能 BI',
-          href: 'https://pro.ant.design',
+          key: 'AI Chart',
+          title: 'AI Chart',
+          href: 'https://github.com/gitgg021/AI-Chart',
           blankTarget: true,
         },
         {
           key: 'github',
           title: <GithubOutlined />,
-          href: 'https://github.com/ant-design/ant-design-pro',
+          href: 'https://github.com/gitgg021/AI-Chart',
           blankTarget: true,
         },
         {
-          key: 'CC智能 BI',
-          title: 'CC智能 BI',
-          href: 'https://ant.design',
+          key: 'AI Chart',
+          title: 'AI Chart',
+          href: 'https://github.com/gitgg021/AI-Chart',
           blankTarget: true,
         },
       ]}

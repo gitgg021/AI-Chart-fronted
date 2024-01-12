@@ -96,8 +96,8 @@ const Login: React.FC = () => {
             maxWidth: '75vw',
           }}
           logo={<img alt="logo" src="/logo.svg" />}
-          title="CC智能 BI"
-          subTitle={'CC智能 BI 旨于提供更便捷的BI服务'}
+          title="AI Chart"
+          subTitle={'AI Chart 旨于提供更便捷的BI服务'}
 
           onFinish={async (values) => {
             await handleSubmit(values as API.UserLoginRequest);
