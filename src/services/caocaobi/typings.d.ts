@@ -1,4 +1,9 @@
 declare namespace API {
+  type addUsingGETParams = {
+    /** name */
+    name?: string;
+  };
+
   type AIResultDto = {
     chartData?: string;
     chartId?: string;
@@ -73,7 +78,6 @@ declare namespace API {
 
   type Chart = {
     chartData?: string;
-    chartState?: number;
     chartType?: string;
     createTime?: string;
     execMessage?: string;
@@ -83,6 +87,7 @@ declare namespace API {
     id?: string;
     isDelete?: number;
     name?: string;
+    status?: string;
     updateTime?: string;
     userId?: string;
   };
@@ -126,6 +131,12 @@ declare namespace API {
     id?: string;
   };
 
+  type getChartByAiAsyncUsingPOSTParams = {
+    chartType?: string;
+    goal?: string;
+    name?: string;
+  };
+
   type getChartByAiUsingPOSTParams = {
     chartType?: string;
     goal?: string;
@@ -162,7 +173,7 @@ declare namespace API {
     column?: string;
   };
 
-  type PageChart_ = {
+/*  type PageChart_ = {
     countId?: string;
     current?: string;
     maxLimit?: string;
@@ -173,6 +184,18 @@ declare namespace API {
     searchCount?: boolean;
     size?: string;
     total?: string;
+  };*/
+  type PageChart_ = {
+    countId?: string;
+    current?: number;
+    maxLimit?: number;
+    optimizeCountSql?: boolean;
+    orders?: OrderItem[];
+    pages?: number;
+    records?: Chart[];
+    searchCount?: boolean;
+    size?: number;
+    total?: number;
   };
 
   type PageUser_ = {
