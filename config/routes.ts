@@ -2,8 +2,15 @@
   {
     path: '/user',
     layout: false,
-    routes: [{ name: '登录', path: '/user/login', component: './User/Login' }],
+    routes: [{ name: '登录', path: '/user/login', component: './User/Login' }]
   },
+
+  {
+    path: '/user',
+    layout: false,
+    routes: [{name: '注册',path: '/user/register', component: './User/Register' }]
+  },
+
   {
     path: '/',
     redirect: '/add_chart',
@@ -26,7 +33,6 @@
     icon: "pieChart",
     component: './MyChart'
   },
-  { path: '/welcome', name: '欢迎', icon: 'smile', component: './Welcome' },
   {
     path: '/admin',
     name: '管理页',
