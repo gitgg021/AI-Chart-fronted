@@ -1,3 +1,4 @@
+/*
 import { getChartByAiUsingPost } from '@/services/caocaobi/chartController';
 import { UploadOutlined } from '@ant-design/icons';
 import {Button, Card, Col, Divider, Form, Input, message, Row, Select, Space, Spin, Upload} from 'antd';
@@ -5,20 +6,22 @@ import TextArea from 'antd/es/input/TextArea';
 import ReactECharts from 'echarts-for-react';
 import React, { useState } from 'react';
 
-/**
+/!**
  * 添加图表页面
  * @constructor
- */
+ *!/
 
 const AddChart: React.FC = () => {
   const [chart, setChart] = useState<API.AIResultDto>();
   const [option, setOption] = useState<any>();
   const [submitting, setSubmitting] = useState<boolean>(false);
 
-  /**
+
+
+  /!**
    * 提交
    * @param values
-   */
+   *!/
 
   const onFinish = async (values: any) => {
     // 避免重复提交
@@ -28,6 +31,8 @@ const AddChart: React.FC = () => {
     setSubmitting(true);
     setChart(undefined);
     setOption(undefined);
+
+
 
     // 对接后端，上传数据
     const params = {
@@ -55,6 +60,7 @@ const AddChart: React.FC = () => {
     setSubmitting(false);
   };
 
+
   return (
     //把页面内容指定一个类名add_chart
     <div className="add-chart">
@@ -79,9 +85,11 @@ const AddChart: React.FC = () => {
                   options={[
                     { value: '折线图', label: '折线图' },
                     { value: '柱状图', label: '柱状图' },
-                    { value: '堆叠图', label: '堆叠图' },
                     { value: '饼图', label: '饼图' },
+                    { value: '堆叠图', label: '堆叠图' },
                     { value: '雷达图', label: '雷达图' },
+                    { value: '玫瑰饼图', label: '玫瑰饼图' },
+
                   ]}
                 />
               </Form.Item>
@@ -107,6 +115,7 @@ const AddChart: React.FC = () => {
             {chart?.onAnalysis ?? <div>请先在左侧进行提交</div>}
             <Spin spinning={submitting}/>
           </Card>
+
           <Divider />
           <Card title="可视化图表">
             {
@@ -122,3 +131,5 @@ const AddChart: React.FC = () => {
 };
 
 export default AddChart;
+
+*/

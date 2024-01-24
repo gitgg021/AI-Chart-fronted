@@ -1,10 +1,12 @@
-import { listMyChartByPageUsingPost } from '@/services/caocaobi/chartController';
-import { useModel } from '@@/exports';
-import { Avatar, Card, message, Result } from 'antd';
+import {deleteChartUsingPost, listMyChartByPageUsingPost} from '@/services/caocaobi/chartController';
+import {Link, useModel} from '@@/exports';
+import {Avatar, Button, Card, Col, Divider, message, Modal, Result, Row} from 'antd';
 import Search from 'antd/es/input/Search';
 import List from 'antd/lib/list';
-import ReactECharts from 'echarts-for-react';
-import React, { useEffect, useState } from 'react';
+
+import React, {useEffect, useState} from 'react';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
+import ReactECharts from "echarts-for-react";
 
 /**
  * 我的图表页面
@@ -19,15 +21,33 @@ const MyChartPage: React.FC = () => {
     sortField: 'createTime',
     sortOrder: 'desc',
   };
-  const [searchParams, setSearchParams] = useState<API.ChartQueryRequest>({ ...initSearchParams });
-  const { initialState } = useModel('@@initialState');
-  const { currentUser } = initialState ?? {};
+
+  /**
+   * 查询参数
+   */
+
+  const [searchParams, setSearchParams] = useState<API.ChartQueryRequest>({
+    ...initSearchParams,
+  });
+
   //定义变量存储如表数据
   const [chartList, setChartList] = useState<API.Chart[]>();
   //数据总数total,默认为0
   const [total, setTotal] = useState<number>();
   //加载状态,用来控制页面是否加载,默认正在加载
   const [loading, setLoading] = useState<boolean>(true);
+
+  /**
+   * 获取当前用户
+   */
+  const { initialState } = useModel('@@initialState');
+  const { currentUser } = initialState || {};
+
+
+  /**
+   * 加载图表数据
+   */
+
   const loadData = async () => {
     //获取数据中
     setLoading(true);
@@ -69,6 +89,36 @@ const MyChartPage: React.FC = () => {
     loadData();
   }, [searchParams]);
 
+  /**
+   * 删除图表
+   * @param chartId
+   */
+  const handleDelete = (chartId: any) => {
+    Modal.confirm({
+      title: '确认删除',
+      icon: <ExclamationCircleOutlined />,
+      content: '确定要删除这个图表吗？',
+      okText: '确认',
+      cancelText: '取消',
+      onOk: async () => {
+        try {
+          const res = await deleteChartUsingPost({ id: chartId });
+          console.log('res:', res.data);
+          if (res.data) {
+            message.success('删除成功');
+            // 删除成功后重新加载图表数据
+            loadData();
+          } else {
+            message.error('删除失败');
+          }
+        } catch (e: any) {
+          message.error('删除失败' + e.message);
+        }
+      },
+    });
+  };
+
+
   return (
     <div className="my-chart-page">
       {/*引入搜索框*/}
@@ -100,6 +150,12 @@ const MyChartPage: React.FC = () => {
           xxl: 2,
         }}
         pagination={{
+          // 设置分页
+          showTotal: () => `共 ${total} 条记录`,
+          showSizeChanger: true,
+          showQuickJumper: true,
+          pageSizeOptions: ['4','10', '20', '30'],
+
           /*
         page第几页，pageSize每页显示多少条;
         当用户点击这个分页组件,切换分页时,这个组件就会去触发onChange方法,会改变咱们现在这个页面的搜索条件
@@ -122,8 +178,8 @@ const MyChartPage: React.FC = () => {
             <Card style={{ width: '100%' }}>
               <List.Item.Meta
                 //当前用户头像
-                avatar={<Avatar src={currentUser && currentUser.userAvatar} />}
-                title={item.name}
+                avatar={<Avatar src={currentUser?.userAvatar} />}
+                title={currentUser?.userName}
                 description={item.chartType ? '图表类型：' + item.chartType : undefined}
               />
               <>
@@ -134,28 +190,124 @@ const MyChartPage: React.FC = () => {
                       title="待生成"
                       subTitle={item.execMessage ?? '当前图表生成队列繁忙，请耐心等候'}
                     />
+                    <Row>
+                      <Col push={16}>
+                        <Link to={`/ViewChartData/${item.id}`}>
+                          <Button>查看图表数据</Button>
+                        </Link>
+                      </Col>
+                      <Col push={17}>
+                        <Button danger onClick={() => handleDelete(item.id)}>
+                          删除
+                        </Button>
+                      </Col>
+
+                    </Row>
+
                   </>
                 )}
 
                 {item.status === 'running' && (
                   <>
                     <Result status="info" title="图表生成中" subTitle={item.execMessage} />
+                    <Link to={`/ViewChartData/${item.id}`}>
+                      <Button>查看图表数据</Button>
+                    </Link>
+
                   </>
                 )}
 
-                {item.status === 'succeed' && (
+             {/*   {item.status === 'succeed' && (
                   <>
                     <div style={{ marginBottom: 16 }} />
                     <p>{'分析目标：' + item.goal}</p>
                     <div style={{ marginBottom: 16 }} />
                     <ReactECharts option={item.genChart && JSON.parse(item.genChart)} />
                   </>
+                )}*/}
+
+                {item.status === 'succeed' && (
+                  <>
+                    <p
+                      style={{
+                        textAlign: 'center',
+                        fontWeight: 'bold',
+                        color: 'orange',
+                        fontSize: '16px',
+                      }}
+                    >
+                      {'图表名称：' + item.name}
+                    </p>
+
+                    <List.Item.Meta
+                      style={{ textAlign: 'left', fontWeight: 'bold' }}
+                      description={item.chartType ? '图表类型：' + item.chartType : undefined}
+                    />
+                    <ReactECharts option={item.genChart && JSON.parse(item.genChart)} />
+                    <p
+                      style={{
+                        textAlign: 'center',
+                        fontWeight: 'bold',
+                        color: '#000000',
+                        fontSize: '16px',
+                      }}
+                    >
+                      {'分析目标：' + item.goal}
+                    </p>
+                    <Divider style={{ fontWeight: 'bold', color: 'orange', fontSize: '16px' }}>
+                      智能分析结果
+                    </Divider>
+                    <div style={{ whiteSpace: 'pre-wrap', overflow: 'auto' }}>
+                      <p style={{ fontWeight: 'bold', color: '#00000080' ,textAlign:"left"}}>
+                        {item.genResult}
+                      </p>
+                    </div>
+                    <Row>
+
+                      <Col style={{ color: 'black', fontWeight: 'bold' }}>
+                        {new Date(item.createTime).toLocaleString()}
+                      </Col>
+
+
+                      <Col push={4}>
+                        <Link to={`/ViewChartData/${item.id}`}>
+                          <Button>查看图表数据</Button>
+                        </Link>
+                      </Col>
+
+                      <Col push={6}>
+                        <Button danger onClick={() => handleDelete(item.id)}>
+                          删除
+                        </Button>
+                      </Col>
+
+                    </Row>
+                  </>
                 )}
+
 
                 {item.status === 'failed' && (
                   <>
                     <Result status="error" title="图表生成失败" subTitle={item.execMessage} />
-                  </>
+                    <Row justify="end">
+                      <Col style={{ paddingRight: '10px' }}>
+                        <Button type="primary" onClick={() => message.warning('敬请期待')}>
+                          重试
+                        </Button>
+                      </Col>
+                      <Col>
+                        <Link to={`/ViewChartData/${item.id}`}>
+                          <Button>查看图表数据</Button>
+                        </Link>
+                      </Col>
+                      <Col>
+                        <Button danger onClick={() => handleDelete(item.id)}>
+                          删除
+                        </Button>
+                      </Col>
+                    </Row>
+
+                      </>
                 )}
               </>
             </Card>

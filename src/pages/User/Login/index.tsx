@@ -1,29 +1,21 @@
 import Footer from '@/components/Footer';
-import {
-  AlipayCircleOutlined,
-  LockOutlined,
-  TaobaoCircleOutlined,
-  UserOutlined,
-  WeiboCircleOutlined,
-} from '@ant-design/icons';
+import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { LoginForm, ProFormText } from '@ant-design/pro-components';
 import { useEmotionCss } from '@ant-design/use-emotion-css';
 import { Helmet, history, useModel } from '@umijs/max';
-import { Alert, message, Tabs } from 'antd';
+import { message, Tabs } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { flushSync } from 'react-dom';
 import Settings from '../../../../config/defaultSettings';
 import { listChartByPageUsingPost } from '@/services/caocaobi/chartController';
 import { Link } from '@@/exports';
-import { getLoginUserUsingGet, userLoginUsingPost } from '@/services/caocaobi/userController';
-
-
+import {getLoginUserUsingGet, userLoginUsingPost} from '@/services/caocaobi/userController';
 
 const Login: React.FC = () => {
-  const [userLoginState, setUserLoginState] = useState<API.LoginResult>({});
   const [type, setType] = useState<string>('account');
   const { initialState, setInitialState } = useModel('@@initialState');
   const containerClassName = useEmotionCss(() => {
+
     return {
       display: 'flex',
       flexDirection: 'column',
@@ -36,13 +28,13 @@ const Login: React.FC = () => {
   });
 
   useEffect(() => {
-    listChartByPageUsingPost({}).then(res =>{
-      console.error('res',res)
-    })
-  })
+    listChartByPageUsingPost({}).then((res) => {
+      console.error('res', res);
+    });
+  });
 
   /**
-   * 登录成功后获取用户的登录信息
+   * 登陆成功后，获取用户登录信息
    */
   const fetchUserInfo = async () => {
     const userInfo = await getLoginUserUsingGet();
@@ -55,6 +47,7 @@ const Login: React.FC = () => {
       });
     }
   };
+
   const handleSubmit = async (values: API.UserLoginRequest) => {
     try {
       // 登录
@@ -66,17 +59,15 @@ const Login: React.FC = () => {
         const urlParams = new URL(window.location.href).searchParams;
         history.push(urlParams.get('redirect') || '/');
         return;
-      }else {
-        message.error(res.message)
+      } else {
+        message.error(res.message);
       }
-
     } catch (error) {
       const defaultLoginFailureMessage = '登录失败，请重试！';
       console.log(error);
       message.error(defaultLoginFailureMessage);
     }
   };
-  const { status, type: loginType } = userLoginState;
   return (
     <div className={containerClassName}>
       <Helmet>
@@ -98,7 +89,6 @@ const Login: React.FC = () => {
           logo={<img alt="logo" src="/logo.svg" />}
           title="AI Chart"
           subTitle={'您的智能化分析助手'}
-
           onFinish={async (values) => {
             await handleSubmit(values as API.UserLoginRequest);
           }}
@@ -115,7 +105,6 @@ const Login: React.FC = () => {
             ]}
           />
 
-
           {type === 'account' && (
             <>
               <ProFormText
@@ -124,7 +113,7 @@ const Login: React.FC = () => {
                   size: 'large',
                   prefix: <UserOutlined />,
                 }}
-                placeholder={'请输入用户名'}
+                placeholder={'请输入用户名 测试账号caocao'}
                 rules={[
                   {
                     required: true,
@@ -138,7 +127,7 @@ const Login: React.FC = () => {
                   size: 'large',
                   prefix: <LockOutlined />,
                 }}
-                placeholder={'请输入密码'}
+                placeholder={'请输入密码   测试密码12345678'}
                 rules={[
                   {
                     required: true,
@@ -149,18 +138,13 @@ const Login: React.FC = () => {
             </>
           )}
 
-
           <div
             style={{
               marginBottom: 24,
             }}
           >
-           <Link
-              to="/user/register"
-            >
-             注册
-           </Link>
-           </div>
+            <Link to="/user/register">注册</Link>
+          </div>
         </LoginForm>
       </div>
       <Footer />

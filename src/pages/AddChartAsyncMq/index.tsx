@@ -1,4 +1,3 @@
-/*
 import {genChartByAiAsyncMqUsingPost, getChartByAiAsyncUsingPost} from "@/services/caocaobi/chartController";
 import { UploadOutlined } from '@ant-design/icons';
 import { Button, Card, Form, Input, message, Select, Space, Upload } from 'antd';
@@ -7,20 +6,20 @@ import TextArea from 'antd/es/input/TextArea';
 import React, { useState } from 'react';
 
 
-/!**
+/**
  * 添加图表(异步)页面
  * @constructor
- *!/
+ */
 
 const AddChartAsync: React.FC = () => {
   const [form] = useForm();
   //提交中的状态,默认未提交
   const [submitting, setSubmitting] = useState<boolean>(false);
 
-  /!**
+  /**
    * 提交
    * @param values
-   *!/
+   */
 
   const onFinish = async (values: any) => {
     // 避免重复提交
@@ -35,8 +34,8 @@ const AddChartAsync: React.FC = () => {
       file: undefined,
     };
     try {
-      const res = await getChartByAiAsyncUsingPost(params, {}, values.file.file.originFileObj);
-
+      /*const res = await getChartByAiAsyncUsingPost(params, {}, values.file.file.originFileObj);*/
+      const res = await genChartByAiAsyncMqUsingPost(params, {}, values.file.file.originFileObj);
       if (!res?.data) {
         message.error('分析失败');
       } else {
@@ -81,13 +80,12 @@ const AddChartAsync: React.FC = () => {
                 { value: '堆叠图', label: '堆叠图' },
                 { value: '雷达图', label: '雷达图' },
                 { value: '玫瑰饼图', label: '玫瑰饼图' },
-
               ]}
             />
           </Form.Item>
           <Form.Item name="file" label="原始数据">
             <Upload name="file" maxCount={1}>
-              <Button icon={<UploadOutlined />}>上传 CSV 文件</Button>
+              <Button icon={<UploadOutlined />}>上传 XLSX 文件</Button>
             </Upload>
           </Form.Item>
 
@@ -106,4 +104,3 @@ const AddChartAsync: React.FC = () => {
 };
 
 export default AddChartAsync;
-*/

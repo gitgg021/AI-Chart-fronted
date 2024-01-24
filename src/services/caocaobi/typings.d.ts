@@ -131,6 +131,12 @@ declare namespace API {
     id?: string;
   };
 
+  type genChartByAiAsyncMqUsingPOSTParams = {
+    chartType?: string;
+    goal?: string;
+    name?: string;
+  };
+
   type getChartByAiAsyncUsingPOSTParams = {
     chartType?: string;
     goal?: string;
@@ -173,7 +179,7 @@ declare namespace API {
     column?: string;
   };
 
-/*  type PageChart_ = {
+  type PageChart_ = {
     countId?: string;
     current?: string;
     maxLimit?: string;
@@ -183,18 +189,7 @@ declare namespace API {
     records?: Chart[];
     searchCount?: boolean;
     size?: string;
-    total?: string;
-  };*/
-  type PageChart_ = {
-    countId?: string;
-    current?: number;
-    maxLimit?: number;
-    optimizeCountSql?: boolean;
-    orders?: OrderItem[];
-    pages?: number;
-    records?: Chart[];
-    searchCount?: boolean;
-    size?: number;
+    /*total?: string;*/
     total?: number;
   };
 
