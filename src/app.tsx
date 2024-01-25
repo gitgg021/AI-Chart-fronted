@@ -125,7 +125,10 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
  * @doc https://umijs.org/docs/max/request#配置
  */
 export const request = {
-  baseURL:"http://localhost:8080",
+ 
+   //pro: "http://aichart.huahuaguagua.top"
+
+  baseURL:"http://aichart.huahuaguagua.top",
   withCredentials: true,
   ...errorConfig,
 };
